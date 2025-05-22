@@ -500,7 +500,6 @@ class AfterDetailerScript(scripts.Script):
     ) -> StableDiffusionProcessingImg2Img:
         seed, subseed = self.get_seed(p)
         width, height = self.get_width_height(p, args)
-        steps = self.get_steps(p, args)
         cfg_scale = self.get_cfg_scale(p, args)
         initial_noise_multiplier = self.get_initial_noise_multiplier(p, args)
         sampler_name = self.get_sampler(p, args)
@@ -535,7 +534,7 @@ class AfterDetailerScript(scripts.Script):
             sampler_name=sampler_name,
             batch_size=1,
             n_iter=1,
-            steps=steps,
+            steps=28,   # default here due to bug in modules.processing
             cfg_scale=cfg_scale,
             width=width,
             height=height,
@@ -553,6 +552,7 @@ class AfterDetailerScript(scripts.Script):
         i2i.scripts, i2i.script_args = self.script_filter(p, args)
         i2i._ad_disabled = True
         i2i._ad_inner = True
+        i2i.steps = self.get_steps(p, args)
 
         if args.ad_controlnet_model != "Passthrough" and controlnet_type != "forge":
             i2i.script_args = self.disable_controlnet_units(i2i.script_args)
