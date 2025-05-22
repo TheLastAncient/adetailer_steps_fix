@@ -534,7 +534,7 @@ class AfterDetailerScript(scripts.Script):
             sampler_name=sampler_name,
             batch_size=1,
             n_iter=1,
-            steps=28,   # default here due to bug in modules.processing
+            steps=28,  # default here due to bug in modules.processing
             cfg_scale=cfg_scale,
             width=width,
             height=height,
